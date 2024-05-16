@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analyzer</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="style.css">
+    <script type="importmap">
+        {
+          "imports": {
+            "@material/web/": "https://esm.run/@material/web/"
+          }
+        }
+      </script>
+    <script type="module">
+        import '@material/web/all.js';
+        import { styles as typescaleStyles } from '@material/web/typography/md-typescale-styles.js';
+
+        document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="md-typescale-display-small">Sentiment Analyzer</h2>
+        <form id="inputForm">
+            <md-filled-text-field id="textInput" type="textarea" rows="4"
+                label="Enter text to analyze"></md-filled-text-field>
+            <md-filled-button type="submit">Analyze</md-filled-button>
+            <md-circular-progress indeterminate id="progressSpinner" class="progress-spinner"
+                style="display:none;"></md-circular-progress>
+        </form>
+        <div id="response"></div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#inputForm').submit(function (event) {
+                event.preventDefault();
+                $('#progressSpinner').show();
+                var formData = {
+                    'text': $('#textInput').val()
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://127.0.0.1:5000/get_sentiment',
+                    data: JSON.stringify(formData),
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    encode: true
+                })
+                    .done(function (data) {
+                        $('#response').html(data.message);
+                        $('#progressSpinner').hide();
+                    })
+                    .fail(function (error) {
+                        console.log(error);
+                        $('#progressSpinner').hide();
+                        $('#textInput').attr("error", true);
+                        $('#textInput').attr("supporting-text", "An error occured");
+                    });
+            });
+        });
+
+    </script>
+</body>
+
+</html>

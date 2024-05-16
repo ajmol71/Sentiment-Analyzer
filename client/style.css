@@ -1,0 +1,48 @@
+body {
+    background-color: #e8e8f0;
+    /* Light purple background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.container {
+    min-width: 40vw;
+    max-width: 50vw;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 16px;
+}
+
+#textInput {
+    width: 100%;
+    font-size: 16px;
+    margin-bottom: 16px;
+    resize: both;
+    /* Allow resizing the textarea */
+}
+
+button {
+    color: white;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#response {
+    margin-top: 16px;
+}
+
+.progress-spinner {
+    --md-circular-progress-size: 42px;
+}
